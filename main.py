@@ -7,11 +7,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-from flask import Flask, jsonify
+from flask_frozen import Freezer
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 app.json.sort_keys = False
 
+# @freezer.register_generator
 def set_driver():
     try: 
         options = Options()
@@ -32,14 +34,15 @@ def set_driver():
         })
 
         # return webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
-        return webdriver.Chrome(options=options, service=Service(executable_path="./chromedriverlinux"))
+        return webdriver.Chrome(options=options, service=Service(executable_path="./chromedriverwindows.exe"))
     except Exception as e:
         print(f"Error SetDriver: {str(e)}")
         return None
-
-@app.route("/")
+    
+@app.route("/", methods=["GET"])
 def home():
-    return jsonify(get_updated_manga_list())
+    return "<h1>Created by NikxPhreaker</h1><a href='/mangalist'>Mangalist</a>"
+    # return jsonify(get_updated_manga_list())
     # if check_variable_type(driver, webdriver.Chrome):
     #     print("Getting url...")
     #     driver.get(url)
@@ -50,24 +53,30 @@ def home():
     #         "message": "Variable is of the incorrect type."
     #     })
 
-@app.route("/about")
+@app.route("/mangalist")
 def about():
-    return jsonify({
-        "Created by": "NikxPhreaker"
-    })
-    
+    return jsonify(get_updated_manga_list())
+
+# @app.route("/about")
+# def about():
+#     return jsonify({
+#         "Created by": "NikxPhreaker"
+#     })
+
+# @freezer.register_generator   
 def check_variable_type(variable: any, expected_type: type) -> bool:
     if not isinstance(variable, expected_type):
         print(f"Error: Expected {expected_type}, but got {type(variable)}")
         return False
     return True
-    
+
+# @freezer.register_generator
 def get_updated_manga_list():
     print("setting up driver...")
     driver: webdriver.Chrome = set_driver()
     try:
         print("getting updated manga list...")
-        url = "http://mangaku.lat"
+        url = "https://mangaku.lat"
         driver.get(url)
         # Wait for an element to be present
         element = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//*[@id="t1"]/div/div[1]/div[@class="utao"]')))
@@ -108,5 +117,10 @@ def get_updated_manga_list():
     # with open("html.html", "w", encoding="utf-8") as file:
     #     file.write(source)
 
+# if __name__ == '__main__':
+#     app.run()
+
+freezer = Freezer(app)
 if __name__ == '__main__':
-    app.run()
+    # Generate the static files using Frozen-Flask
+    freezer.freeze()

@@ -7,6 +7,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 # from webdriver_manager.chrome import ChromeDriverManager
 
+import eventlet
+from eventlet import wsgi
 from gevent.pywsgi import WSGIServer
 from flask_frozen import Freezer
 from flask import Flask, render_template, jsonify
@@ -19,7 +21,7 @@ def set_driver():
     try: 
         options = Options()
         options.add_argument("start-maximized")
-        options.add_argument("--headless=new")
+        options.add_argument("--headless")
         # options.add_argument('--disable-software-rasterizer')
         options.add_argument('--disable-infobars')  # Disable "Chrome is being controlled by automated test software" infobar
         options.add_argument('--disable-extensions')  # Disable extensions
@@ -119,6 +121,7 @@ def get_updated_manga_list():
     #     file.write(source)
 
 if __name__ == '__main__':
+    # wsgi.server(eventlet.listen(("127.0.0.1", 8000)), app)
     http_server = WSGIServer(("0.0.0.0", 8000), app)
     http_server.serve_forever()
     # app.run()

@@ -13,6 +13,9 @@ from gevent.pywsgi import WSGIServer
 from flask_frozen import Freezer
 from flask import Flask, render_template, jsonify
 
+import os
+os.chmod('./chromedriverlinux', 0o755)
+
 app = Flask(__name__)
 app.json.sort_keys = False
 

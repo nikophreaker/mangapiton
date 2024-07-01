@@ -1,4 +1,6 @@
 webdriver-manager
 Selenium
 Flask
+Waitress
+Gunicorn
 Frozen-Flask

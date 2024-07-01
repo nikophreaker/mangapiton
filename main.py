@@ -39,7 +39,7 @@ def set_driver():
 
         # return webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
         # return webdriver.Chrome(options=options)
-        return webdriver.Chrome(options=options, service=Service(executable_path="chromedriverlinux"))
+        return webdriver.Chrome(options=options, service=Service(executable_path="./chromedriverlinux"))
     except Exception as e:
         print(f"Error SetDriver: {str(e)}")
         return None

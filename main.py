@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 # from webdriver_manager.chrome import ChromeDriverManager
 
+from gevent.pywsgi import WSGIServer
 from flask_frozen import Freezer
 from flask import Flask, render_template, jsonify
 
@@ -118,7 +119,9 @@ def get_updated_manga_list():
     #     file.write(source)
 
 if __name__ == '__main__':
-    app.run()
+    http_server = WSGIServer(("127.0.0.1", 8000), app)
+    http_server.serve_forever()
+    # app.run()
 
 # freezer = Freezer(app)
 # if __name__ == '__main__':

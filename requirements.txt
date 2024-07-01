@@ -3,4 +3,5 @@ Selenium
 Flask
 Waitress
 Gunicorn
+Gevent
 Frozen-Flask

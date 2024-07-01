@@ -20,6 +20,7 @@ app.json.sort_keys = False
 def set_driver():
     try: 
         options = Options()
+        # options.add_argument('--remote-debugging-pipe')
         options.add_argument("start-maximized")
         options.add_argument("--headless")
         # options.add_argument('--disable-software-rasterizer')
@@ -37,7 +38,8 @@ def set_driver():
         })
 
         # return webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
-        return webdriver.Chrome(options=options)
+        # return webdriver.Chrome(options=options)
+        return webdriver.Chrome(options=options, service=Service(executable_path="./chromedriverlinux"))
     except Exception as e:
         print(f"Error SetDriver: {str(e)}")
         return None

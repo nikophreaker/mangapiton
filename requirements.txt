@@ -1,4 +1,4 @@
 webdriver-manager
 Selenium
 Flask
-Freezer
+Frozen-Flask

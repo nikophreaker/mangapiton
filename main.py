@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 
 from flask_frozen import Freezer
 from flask import Flask, render_template, jsonify
@@ -34,7 +34,7 @@ def set_driver():
         })
 
         # return webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
-        return webdriver.Chrome(options=options, service=Service(executable_path="./chromedriverwindows.exe"))
+        return webdriver.Chrome(options=options)
     except Exception as e:
         print(f"Error SetDriver: {str(e)}")
         return None
@@ -117,10 +117,10 @@ def get_updated_manga_list():
     # with open("html.html", "w", encoding="utf-8") as file:
     #     file.write(source)
 
-# if __name__ == '__main__':
-#     app.run()
-
-freezer = Freezer(app)
 if __name__ == '__main__':
-    # Generate the static files using Frozen-Flask
-    freezer.freeze()
+    app.run()
+
+# freezer = Freezer(app)
+# if __name__ == '__main__':
+#     # Generate the static files using Frozen-Flask
+#     freezer.freeze()

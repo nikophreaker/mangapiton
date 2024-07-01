@@ -14,7 +14,7 @@ from flask_frozen import Freezer
 from flask import Flask, render_template, jsonify
 
 import os
-os.chmod('./chromedriverlinux', 0o755)
+os.chmod('/workspace/chromedriverlinux', 0o755)
 
 app = Flask(__name__)
 app.json.sort_keys = False
@@ -42,7 +42,7 @@ def set_driver():
 
         # return webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
         # return webdriver.Chrome(options=options)
-        return webdriver.Chrome(options=options, service=Service(executable_path="./chromedriverlinux"))
+        return webdriver.Chrome(options=options, service=Service(executable_path="/workspace/chromedriverlinux"))
     except Exception as e:
         print(f"Error SetDriver: {str(e)}")
         return None
